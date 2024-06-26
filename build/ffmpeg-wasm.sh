@@ -35,6 +35,7 @@ CONF_FLAGS=(
   -sMODULARIZE                             # modularized to use as a library
   -sINITIAL_MEMORY=1024MB                  # ALLOW_MEMORY_GROWTH is not recommended when using threads, thus we use a large initial memory
   -sPTHREAD_POOL_SIZE=32                   # use 32 threads
+  -sPTHREAD_POOL_SIZE_STRICT=2             # abort on thread pool exhaustion
   -sEXPORT_NAME="$EXPORT_NAME"             # required in browser env, so that user can access this module from window object
   -sEXPORTED_FUNCTIONS=$(node src/bind/ffmpeg/export.js) # exported functions
   -sEXPORTED_RUNTIME_METHODS=$(node src/bind/ffmpeg/export-runtime.js) # exported built-in functions
