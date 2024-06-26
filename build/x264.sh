@@ -9,7 +9,6 @@ CONF_FLAGS=(
   --disable-cli                   # disable cli build
   --disable-asm                   # disable assembly
   --extra-cflags="$CFLAGS"        # add extra cflags
-  ${FFMPEG_ST:+ --disable-thread} # disable thread when FFMPEG_ST is defined
 )
 
 emconfigure ./configure "${CONF_FLAGS[@]}"

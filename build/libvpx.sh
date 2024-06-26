@@ -13,7 +13,6 @@ CONF_FLAGS=(
   --disable-dependency-tracking                      # speed up one-time build
   --extra-cflags="$CFLAGS"                           # flags to use pthread and code optimization
   --extra-cxxflags="$CXXFLAGS"                       # flags to use pthread and code optimization
-  ${FFMPEG_ST:+ --disable-multithread}
 )
 
 emconfigure ./configure "${CONF_FLAGS[@]}"

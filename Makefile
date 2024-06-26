@@ -17,34 +17,15 @@ build:
 	make clean PKG_SUFFIX="$(PKG_SUFFIX)"
 	EXTRA_CFLAGS="$(EXTRA_CFLAGS)" \
 	EXTRA_LDFLAGS="$(EXTRA_LDFLAGS)" \
-	FFMPEG_ST="$(FFMPEG_ST)" \
-	FFMPEG_MT="$(FFMPEG_MT)" \
 		docker buildx build \
 			--build-arg EXTRA_CFLAGS \
 			--build-arg EXTRA_LDFLAGS \
-			--build-arg FFMPEG_MT \
-			--build-arg FFMPEG_ST \
-			-o ./packages/core$(PKG_SUFFIX) \
+			-o ./packages/core \
 			$(EXTRA_ARGS) \
 			.
 
-build-st:
-	make build \
-		FFMPEG_ST=yes
-
-build-mt:
-	make build \
-		PKG_SUFFIX=-mt \
-		FFMPEG_MT=yes
-
 dev:
-	make build-st EXTRA_CFLAGS="$(DEV_CFLAGS)" EXTRA_ARGS="$(DEV_ARGS)"
-
-dev-mt:
-	make build-mt EXTRA_CFLAGS="$(DEV_MT_CFLAGS)" EXTRA_ARGS="$(DEV_ARGS)"
+	make build EXTRA_CFLAGS="$(DEV_MT_CFLAGS)" EXTRA_ARGS="$(DEV_ARGS)"
 
 prd:
-	make build-st EXTRA_CFLAGS="$(PROD_CFLAGS)"
-
-prd-mt:
-	make build-mt EXTRA_CFLAGS="$(PROD_MT_CFLAGS)"
+	make build EXTRA_CFLAGS="$(PROD_MT_CFLAGS)"

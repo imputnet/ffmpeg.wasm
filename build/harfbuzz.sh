@@ -4,12 +4,7 @@ set -euo pipefail
 
 CFLAGS="$CFLAGS -DHB_NO_PRAGMA_GCC_DIAGNOSTIC_ERROR"
 
-# A hacky way to disable pthread
-if [[ "$FFMPEG_ST" == "yes" ]]; then
-  sed -i 's#\[have_pthread=true\]#\[have_pthread=false\]#g' configure.ac
-else
-  sed -i 's#\[have_pthread=false\]#\[have_pthread=true\]#g' configure.ac
-fi
+sed -i 's#\[have_pthread=false\]#\[have_pthread=true\]#g' configure.ac
 CXXFLAGS=$CFLAGS
 CONF_FLAGS=(
   --prefix=$INSTALL_DIR                                 # install library in a build directory for FFmpeg to include
