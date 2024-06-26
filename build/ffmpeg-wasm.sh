@@ -45,9 +45,17 @@ CONF_FLAGS=(
   src/fftools/ffmpeg.c 
   src/fftools/ffmpeg_filter.c 
   src/fftools/ffmpeg_hw.c 
+  src/fftools/ffmpeg_enc.c 
+  src/fftools/ffmpeg_dec.c 
+  src/fftools/ffmpeg_demux.c 
   src/fftools/ffmpeg_mux.c 
+  src/fftools/ffmpeg_mux_init.c
   src/fftools/ffmpeg_opt.c 
-  src/fftools/opt_common.c 
+  src/fftools/ffmpeg_sched.c
+  src/fftools/opt_common.c
+  src/fftools/sync_queue.c
+  src/fftools/thread_queue.c
+  src/fftools/objpool.c
 )
 
 emcc "${CONF_FLAGS[@]}" $@

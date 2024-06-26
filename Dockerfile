@@ -5,8 +5,8 @@ FROM emscripten/emsdk:3.1.40 AS emsdk-base
 ARG EXTRA_CFLAGS
 ARG EXTRA_LDFLAGS
 ENV INSTALL_DIR=/opt
-# We cannot upgrade to n6.0 as ffmpeg bin only supports multithread at the moment.
-ENV FFMPEG_VERSION=n5.1.4
+
+ENV FFMPEG_VERSION=n7.0.1
 ENV CFLAGS="-I$INSTALL_DIR/include $CFLAGS $EXTRA_CFLAGS"
 ENV CXXFLAGS="$CFLAGS"
 ENV LDFLAGS="-L$INSTALL_DIR/lib $LDFLAGS $CFLAGS $EXTRA_LDFLAGS"
@@ -76,16 +76,16 @@ RUN bash -x /src/build.sh
 
 # Build zlib
 FROM emsdk-base AS zlib-builder
-ENV ZLIB_BRANCH=v1.2.11
-ADD https://github.com/ffmpegwasm/zlib.git#$ZLIB_BRANCH /src
+ENV ZLIB_BRANCH=v1.3.1
+ADD https://github.com/madler/zlib.git#$ZLIB_BRANCH /src
 COPY build/zlib.sh /src/build.sh
 RUN bash -x /src/build.sh
 
 # Build libwebp
 FROM emsdk-base AS libwebp-builder
 COPY --from=zlib-builder $INSTALL_DIR $INSTALL_DIR
-ENV LIBWEBP_BRANCH=v1.3.2
-ADD https://github.com/ffmpegwasm/libwebp.git#$LIBWEBP_BRANCH /src
+ENV LIBWEBP_BRANCH=v1.4.0
+ADD https://github.com/webmproject/libwebp.git#$LIBWEBP_BRANCH /src
 COPY build/libwebp.sh /src/build.sh
 RUN bash -x /src/build.sh
 
