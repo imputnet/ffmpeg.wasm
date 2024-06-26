@@ -17,4 +17,5 @@ CONF_FLAGS=(
 )
 
 emconfigure ./autogen.sh "${CONF_FLAGS[@]}"
+emconfigure ./configure "${CONF_FLAGS[@]}"
 emmake make install -j

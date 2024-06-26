@@ -18,95 +18,83 @@ RUN apt-get update && \
 
 # Build x264
 FROM emsdk-base AS x264-builder
-ENV X264_BRANCH=4-cores
-ADD https://github.com/ffmpegwasm/x264.git#$X264_BRANCH /src
-COPY build/x264.sh /src/build.sh
-RUN bash -x /src/build.sh
+COPY patches/x264/ /patches
+COPY build/x264.sh /build.sh
+RUN bash -x /build.sh
 
 # Build x265
 FROM emsdk-base AS x265-builder
-ENV X265_BRANCH=3.4
-ADD https://github.com/ffmpegwasm/x265.git#$X265_BRANCH /src
+ADD https://github.com/videolan/x265.git#3.4 /src
 COPY build/x265.sh /src/build.sh
 RUN bash -x /src/build.sh
 
 # Build libvpx
 FROM emsdk-base AS libvpx-builder
-ENV LIBVPX_BRANCH=v1.13.1
-ADD https://github.com/ffmpegwasm/libvpx.git#$LIBVPX_BRANCH /src
+ADD https://chromium.googlesource.com/webm/libvpx.git#v1.14.1 /src/
 COPY build/libvpx.sh /src/build.sh
 RUN bash -x /src/build.sh
 
 # Build lame
 FROM emsdk-base AS lame-builder
 ENV LAME_BRANCH=master
-ADD https://github.com/ffmpegwasm/lame.git#$LAME_BRANCH /src
+ADD https://sourceforge.net/projects/lame/files/lame/3.100/lame-3.100.tar.gz/download /src/lame.tar.gz
 COPY build/lame.sh /src/build.sh
 RUN bash -x /src/build.sh
 
 # Build ogg
 FROM emsdk-base AS ogg-builder
-ENV OGG_BRANCH=v1.3.4
-ADD https://github.com/ffmpegwasm/Ogg.git#$OGG_BRANCH /src
+ADD https://gitlab.xiph.org/xiph/ogg.git#v1.3.4 /src
 COPY build/ogg.sh /src/build.sh
 RUN bash -x /src/build.sh
 
 # Build theora
 FROM emsdk-base AS theora-builder
 COPY --from=ogg-builder $INSTALL_DIR $INSTALL_DIR
-ENV THEORA_BRANCH=v1.1.1
-ADD https://github.com/ffmpegwasm/theora.git#$THEORA_BRANCH /src
+ADD https://gitlab.xiph.org/xiph/theora.git#v1.1.1 /src
 COPY build/theora.sh /src/build.sh
 RUN bash -x /src/build.sh
 
 # Build opus
 FROM emsdk-base AS opus-builder
-ENV OPUS_BRANCH=v1.3.1
-ADD https://github.com/ffmpegwasm/opus.git#$OPUS_BRANCH /src
+ADD https://github.com/xiph/opus.git#v1.3.1 /src
 COPY build/opus.sh /src/build.sh
 RUN bash -x /src/build.sh
 
 # Build vorbis
 FROM emsdk-base AS vorbis-builder
 COPY --from=ogg-builder $INSTALL_DIR $INSTALL_DIR
-ENV VORBIS_BRANCH=v1.3.3
-ADD https://github.com/ffmpegwasm/vorbis.git#$VORBIS_BRANCH /src
+ADD https://gitlab.xiph.org/xiph/vorbis.git#v1.3.3 /src
 COPY build/vorbis.sh /src/build.sh
 RUN bash -x /src/build.sh
 
 # Build zlib
 FROM emsdk-base AS zlib-builder
-ENV ZLIB_BRANCH=v1.3.1
-ADD https://github.com/madler/zlib.git#$ZLIB_BRANCH /src
+ADD https://github.com/madler/zlib.git#v1.3.1 /src
 COPY build/zlib.sh /src/build.sh
 RUN bash -x /src/build.sh
 
 # Build libwebp
 FROM emsdk-base AS libwebp-builder
 COPY --from=zlib-builder $INSTALL_DIR $INSTALL_DIR
-ENV LIBWEBP_BRANCH=v1.4.0
-ADD https://github.com/webmproject/libwebp.git#$LIBWEBP_BRANCH /src
+ADD https://github.com/webmproject/libwebp.git#v1.4.0 /src
 COPY build/libwebp.sh /src/build.sh
 RUN bash -x /src/build.sh
 
 # Build freetype2
 FROM emsdk-base AS freetype2-builder
-ENV FREETYPE2_BRANCH=VER-2-10-4
-ADD https://github.com/ffmpegwasm/freetype2.git#$FREETYPE2_BRANCH /src
+ADD https://git.savannah.gnu.org/git/freetype/freetype2.git#VER-2-13-2 /src
 COPY build/freetype2.sh /src/build.sh
 RUN bash -x /src/build.sh
 
 # Build fribidi
 FROM emsdk-base AS fribidi-builder
-ENV FRIBIDI_BRANCH=v1.0.9
-ADD https://github.com/fribidi/fribidi.git#$FRIBIDI_BRANCH /src
+ADD https://github.com/fribidi/fribidi.git#v1.0.15 /src
 COPY build/fribidi.sh /src/build.sh
 RUN bash -x /src/build.sh
 
 # Build harfbuzz
 FROM emsdk-base AS harfbuzz-builder
-ENV HARFBUZZ_BRANCH=5.2.0
-ADD https://github.com/harfbuzz/harfbuzz.git#$HARFBUZZ_BRANCH /src
+ADD https://github.com/harfbuzz/harfbuzz.git#8.5.0 /src
 COPY build/harfbuzz.sh /src/build.sh
 RUN bash -x /src/build.sh
 
@@ -115,16 +103,14 @@ FROM emsdk-base AS libass-builder
 COPY --from=freetype2-builder $INSTALL_DIR $INSTALL_DIR
 COPY --from=fribidi-builder $INSTALL_DIR $INSTALL_DIR
 COPY --from=harfbuzz-builder $INSTALL_DIR $INSTALL_DIR
-ENV LIBASS_BRANCH=0.15.0
-ADD https://github.com/libass/libass.git#$LIBASS_BRANCH /src
+ADD https://github.com/libass/libass.git#0.17.2 /src
 COPY build/libass.sh /src/build.sh
 RUN bash -x /src/build.sh
 
 # Build zimg
 FROM emsdk-base AS zimg-builder
-ENV ZIMG_BRANCH=release-3.0.5
 RUN apt-get update && apt-get install -y git
-RUN git clone --recursive -b $ZIMG_BRANCH https://github.com/sekrit-twc/zimg.git /src
+RUN git clone --recursive -b release-3.0.5 https://github.com/sekrit-twc/zimg.git /src
 COPY build/zimg.sh /src/build.sh
 RUN bash -x /src/build.sh
 

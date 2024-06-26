@@ -1,0 +1,20 @@
+diff --git a/common/cpu.c b/common/cpu.c
+index b2222e76..34ac2128 100644
+--- a/common/cpu.c
++++ b/common/cpu.c
+@@ -47,6 +47,7 @@
+ #if SYS_OPENBSD
+ #include <machine/cpu.h>
+ #endif
++#include <emscripten/threading.h>
+ 
+ const x264_cpu_name_t x264_cpu_names[] =
+ {
+@@ -483,6 +484,6 @@ int x264_cpu_num_processors( void )
+     return ncpu;
+ 
+ #else
+-    return 1;
++    return emscripten_num_logical_cores();
+ #endif
+ }

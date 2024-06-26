@@ -2,6 +2,11 @@
 
 set -euo pipefail
 
+cd /src
+echo "ddfe36cab873794038ae2c1210557ad34857a4b6bdc515785d1da9e175b1da1e  lame.tar.gz" \
+     | sha256sum --check --status
+tar xvzf lame.tar.gz --strip-components=1
+
 CONF_FLAGS=(
   --prefix=$INSTALL_DIR                               # install library in a build directory for FFmpeg to include
   --host=i686-linux                                   # use i686 linux
