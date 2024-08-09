@@ -1,6 +1,6 @@
 {
   "name": "@imput/ffmpeg-core",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "FFmpeg WebAssembly version (single thread)",
   "main": "./dist/umd/ffmpeg-core.js",
   "exports": {
@@ -27,7 +27,7 @@
     "audio",
     "transcode"
   ],
-  "author": "imput <apps@imput.net>",
+  "author": "imput <meow@imput.net>",
   "license": "GPL-2.0-or-later",
   "bugs": {
     "url": "https://github.com/imputnet/ffmpeg.wasm/issues"
