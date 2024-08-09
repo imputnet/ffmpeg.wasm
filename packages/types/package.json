@@ -1,6 +1,6 @@
 {
-  "name": "@ffmpeg/types",
-  "version": "0.12.2",
+  "name": "@imput/ffmpeg-types",
+  "version": "0.12.3",
   "description": "ffmpeg.wasm types",
   "types": "types",
   "files": [
@@ -8,7 +8,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ffmpegwasm/ffmpeg.wasm.git"
+    "url": "git+https://github.com/imputnet/ffmpeg.wasm.git"
   },
   "keywords": [
     "ffmpeg",
@@ -17,15 +17,15 @@
     "audio",
     "transcode"
   ],
-  "author": "Jerome Wu <jeromewus@gmail.com>",
+  "author": "imput <meow@imput.net>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/ffmpegwasm/ffmpeg.wasm/issues"
+    "url": "https://github.com/imputnet/ffmpeg.wasm/issues"
   },
   "engines": {
     "node": ">=16.x"
   },
-  "homepage": "https://github.com/ffmpegwasm/ffmpeg.wasm#readme",
+  "homepage": "https://github.com/imputnet/ffmpeg.wasm#readme",
   "publishConfig": {
     "access": "public"
   }
